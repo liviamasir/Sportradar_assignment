@@ -1,0 +1,48 @@
+body {
+  font-family: "Syne", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+}
+
+h1,
+h2 {
+  color: #e9dad9;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+table {
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+th,
+td {
+  width: 70px;
+  height: 70px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background: #9cdb90;
+  color: white;
+}
+
+td.today {
+  background: #af504a;
+}
+
+td.empty {
+  background: #f0f0f0;
+}
