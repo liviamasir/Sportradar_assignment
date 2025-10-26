@@ -1,3 +1,20 @@
+let eventsDates = new Set();
+
+fetch("data.json")
+  .then((response) => response.json())
+  .then((data) => {
+    data.data.forEach((event) => {
+      if (event.dateVenue) {
+        eventsDates.add(event.dateVenue);
+      }
+    });
+
+    generateCalendar(2025, 11);
+  })
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+  });
+
 function generateCalendar(year, month) {
   const calendarDiv = document.getElementById("calendar");
   const date = new Date(year, month - 1);
@@ -25,7 +42,14 @@ function generateCalendar(year, month) {
       month - 1 === currentDate.getMonth() &&
       year === currentDate.getFullYear();
 
-    table += `<td class="${isToday ? "today" : ""}">${day}</td>`;
+    const dateString = `${year}-${String(month).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
+
+    const hasEvent = eventsDates.has(dateString);
+    table += `<td class="${isToday ? "today" : ""}">${day}${
+      hasEvent ? "<br>•" : ""
+    }</td>`;
 
     if ((startDay + day) % 7 === 0) {
       table += "</tr><tr>";
@@ -46,5 +70,3 @@ function generateCalendar(year, month) {
   table += "</tr></tbody></table>";
   calendarDiv.innerHTML = `<h2>${monthName} ${year}</h2>` + table;
 }
-
-generateCalendar(2025, 10);
