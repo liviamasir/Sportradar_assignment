@@ -3,10 +3,14 @@ let eventsDates = new Set();
 fetch("data.json")
   .then((response) => response.json())
   .then((data) => {
-    data.data.forEach((event) => {
-      if (event.dateVenue) {
-        eventsDates.add(event.dateVenue);
-      }
+    const events = data.data || [];
+
+    events.forEach((event) => {
+      if (!event.dateVenue) return;
+
+      const key = event.dateVenue;
+      if (!eventsDates[key]) eventsDates[key] = [];
+      eventsDates[key].push(event);
     });
 
     generateCalendar(2025, 11);
@@ -36,20 +40,22 @@ function generateCalendar(year, month) {
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
+    const dateString = `${year}-${String(month).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
+    const hasEvent = eventsDates[dateString];
     const currentDate = new Date();
     const isToday =
       day === currentDate.getDate() &&
       month - 1 === currentDate.getMonth() &&
       year === currentDate.getFullYear();
 
-    const dateString = `${year}-${String(month).padStart(2, "0")}-${String(
-      day
-    ).padStart(2, "0")}`;
-
-    const hasEvent = eventsDates.has(dateString);
-    table += `<td class="${isToday ? "today" : ""}">${day}${
-      hasEvent ? "<br>•" : ""
-    }</td>`;
+    table += `<td 
+      class="${isToday ? "today" : ""} ${hasEvent ? "event-day" : ""}" 
+      data-date="${dateString}"
+    >
+      ${day}${hasEvent ? "<br>•" : ""}
+    </td>`;
 
     if ((startDay + day) % 7 === 0) {
       table += "</tr><tr>";
@@ -69,4 +75,42 @@ function generateCalendar(year, month) {
 
   table += "</tr></tbody></table>";
   calendarDiv.innerHTML = `<h2>${monthName} ${year}</h2>` + table;
+
+  let tooltip = document.getElementById("tooltip");
+  if (!tooltip) {
+    tooltip = document.createElement("div");
+    tooltip.id = "tooltip";
+    document.body.appendChild(tooltip);
+  }
+
+  document.querySelectorAll(".event-day").forEach((cell) => {
+    const date = cell.dataset.date;
+
+    cell.addEventListener("mouseenter", (e) => {
+      const events = eventsDates[date];
+      if (!events) return;
+
+      tooltip.innerHTML = events
+        .map(
+          (ev) => `
+                <div class="tooltip-item">
+                ${ev.homeTeam?.name || "Unknown"} <small>vs</small> ${
+            ev.awayTeam?.name || "Unknown"
+          }<br>
+            `
+        )
+        .join("<br>");
+
+      tooltip.style.display = "block";
+    });
+
+    cell.addEventListener("mousemove", (e) => {
+      tooltip.style.left = e.pageX + 10 + "px";
+      tooltip.style.top = e.pageY + 10 + "px";
+    });
+
+    cell.addEventListener("mouseleave", () => {
+      tooltip.style.display = "none";
+    });
+  });
 }

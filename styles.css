@@ -55,3 +55,25 @@ footer {
   color: #e9dad9;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
+#tooltip {
+  position: absolute;
+  display: none;
+  background: #b8645e;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 1000;
+  max-width: 200px;
+}
+
+.event-day {
+  position: relative;
+  cursor: pointer;
+}
+
+.event-day:hover {
+  background-color: #dcf7d7;
+}
