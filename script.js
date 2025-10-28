@@ -1,4 +1,4 @@
-let eventsDates = new Set();
+let eventsDates = {};
 
 fetch("data.json")
   .then((response) => response.json())
@@ -12,8 +12,22 @@ fetch("data.json")
       if (!eventsDates[key]) eventsDates[key] = [];
       eventsDates[key].push(event);
     });
+    const params = new URLSearchParams(window.location.search);
+    const dateParam = params.get("date");
+    const homeParam = params.get("home");
+    const awayParam = params.get("away");
 
-    generateCalendar(2025, 11);
+    if (dateParam && homeParam && awayParam) {
+      showEventDetails({
+        dateVenue: dateParam,
+        homeTeam: { slug: homeParam, name: homeParam },
+        awayTeam: { slug: awayParam, name: awayParam },
+        originCompetitionName: "AFC Champions League",
+        timeVenueUTC: "16:00:00",
+      });
+    } else {
+      generateCalendar(2025, 11);
+    }
   })
   .catch((error) => {
     console.error("Error fetching data:", error);
@@ -85,22 +99,20 @@ function generateCalendar(year, month) {
 
   document.querySelectorAll(".event-day").forEach((cell) => {
     const date = cell.dataset.date;
+    const events = eventsDates[date];
 
-    cell.addEventListener("mouseenter", (e) => {
-      const events = eventsDates[date];
-      if (!events) return;
-
+    cell.addEventListener("mouseenter", () => {
       tooltip.innerHTML = events
         .map(
           (ev) => `
-                <div class="tooltip-item">
-                ${ev.homeTeam?.name || "Unknown"} <small>vs</small> ${
+          <div class="tooltip-item">
+            ${ev.homeTeam?.name || "Unknown"} <small>vs</small> ${
             ev.awayTeam?.name || "Unknown"
           }<br>
-            `
+          </div>
+        `
         )
         .join("<br>");
-
       tooltip.style.display = "block";
     });
 
@@ -111,6 +123,11 @@ function generateCalendar(year, month) {
 
     cell.addEventListener("mouseleave", () => {
       tooltip.style.display = "none";
+    });
+
+    cell.addEventListener("click", () => {
+      const event = events[0];
+      showEventDetails(event);
     });
   });
 }

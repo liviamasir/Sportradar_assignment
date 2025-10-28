@@ -69,8 +69,40 @@ footer {
   max-width: 200px;
 }
 
-.event-day {
-  position: relative;
+#event-day {
+  display: none;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #9cdb90;
+  border-radius: 15px;
+  background-color: #f9f9f9;
+  font-family: "Syne", sans-serif;
+}
+
+#event-day h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  color: #333;
+  text-align: center;
+}
+
+#event-day p {
+  margin: 5px 0;
+  font-size: 1em;
+  color: #555;
+}
+
+#back-btn {
+  display: block;
+  margin: 15px auto 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #65b655;
+  color: white;
+  font-size: 1em;
   cursor: pointer;
 }
 
