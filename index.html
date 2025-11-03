@@ -28,9 +28,28 @@
         </ul>
       </nav>
     </div>
-    <h1>Sport Events Calendar</h1>
-    <div id="calendar"></div>
-    <div id="event-day"></div>
+    <div class="content">
+      <h1>Sport Events Calendar</h1>
+      <div id="month-selector">
+        <label for="month">Choose month:</label>
+        <select id="month">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11" selected>November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+      <div id="calendar"></div>
+      <div id="event-day"></div>
+    </div>
 
     <script src="eventDetail.js" style="display: none"></script>
     <script src="script.js"></script>

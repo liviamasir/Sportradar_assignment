@@ -32,6 +32,9 @@ fetch("data.json")
     const homeParam = params.get("home");
     const awayParam = params.get("away");
 
+    const currentYear = new Date().getFullYear();
+    const defaultMonth = 11;
+
     if (dateParam && homeParam && awayParam) {
       showEventDetails({
         dateVenue: dateParam,
@@ -41,12 +44,65 @@ fetch("data.json")
         timeVenueUTC: "16:00:00",
       });
     } else {
-      generateCalendar(2025, 11);
+      createMonthSelector(currentYear, defaultMonth);
+      generateCalendar(currentYear, defaultMonth);
     }
   })
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
+
+function createMonthSelector(year, selectedMonth) {
+  const existingSelector = document.getElementById("month-selector");
+  if (existingSelector) {
+    existingSelector.remove();
+  }
+  const container = document.createElement("div");
+  container.id = "month-selector";
+  container.style.textAlign = "center";
+  container.style.margin = "20px auto";
+
+  const label = document.createElement("label");
+
+  const select = document.createElement("select");
+  select.id = "month";
+  select.style.padding = "8px 12px";
+  select.style.borderRadius = "8px";
+  select.style.border = "1px solid #ccc";
+  select.style.fontFamily = "inherit";
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  months.forEach((m, index) => {
+    const option = document.createElement("option");
+    option.value = index + 1;
+    option.textContent = m;
+    if (index + 1 === selectedMonth) option.selected = true;
+    select.appendChild(option);
+  });
+  select.addEventListener("change", () => {
+    const selectedMonth = parseInt(select.value);
+    generateCalendar(year, selectedMonth);
+  });
+
+  container.appendChild(label);
+  container.appendChild(select);
+
+  const calendarContainer = document.getElementById("calendar");
+  calendarContainer.parentNode.insertBefore(container, calendarContainer);
+}
 
 function generateCalendar(year, month) {
   const calendarDiv = document.getElementById("calendar");
