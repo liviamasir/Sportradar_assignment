@@ -5,7 +5,22 @@ fetch("data.json")
   .then((data) => {
     const events = data.data || [];
 
-    events.forEach((event) => {
+    const customEvents = JSON.parse(localStorage.getItem("customEvents")) || [];
+    const combinedEvents = [...events, ...customEvents];
+
+    const allEvents = combinedEvents.filter((event, index, self) => {
+      return (
+        index ===
+        self.findIndex(
+          (e) =>
+            e.dateVenue === event.dateVenue &&
+            e.homeTeam?.name === event.homeTeam?.name &&
+            e.awayTeam?.name === event.awayTeam?.name
+        )
+      );
+    });
+
+    allEvents.forEach((event) => {
       if (!event.dateVenue) return;
 
       const key = event.dateVenue;

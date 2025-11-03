@@ -14,6 +14,19 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div>
+      <nav>
+        <a href="/">
+          <img src="sports.png" title="Homepage" class="logo" />
+        </a>
+        <ul>
+          <li>
+            <a href="/index.html" title="Homepage">Home</a>
+          </li>
+          <li><a href="/" title="Add a new event">Add event</a></li>
+        </ul>
+      </nav>
+    </div>
     <h1>Add new event</h1>
     <form action="" class="form">
       <label for="home-team">Enter a home team</label>
@@ -28,7 +41,7 @@
       <label for="sport">Sport</label>
       <input type="text" id="sport" />
       <br />
-      <input type="submit" value="Add Event" />
+      <input type="submit" value="Add Event" id="add-event-btn" />
     </form>
   </body>
   <script>
@@ -40,7 +53,7 @@
       const dateTime = document.getElementById("event-date").value;
       const sport = document.getElementById("sport").value;
 
-      const dateVenue = dateTime.split("T")[0];
+      const [dateVenue, timeVenueUTC] = dateTime.split("T");
 
       const savedEvents =
         JSON.parse(localStorage.getItem("customEvents")) || [];
@@ -49,6 +62,7 @@
         homeTeam: { name: homeTeam },
         awayTeam: { name: awayTeam },
         dateVenue: dateVenue,
+        timeVenueUTC: timeVenueUTC,
         sport: sport,
         originCompetitionName: "User added",
       });
@@ -58,4 +72,14 @@
       window.location.href = "index.html";
     });
   </script>
+  <footer>
+    <p>
+      This page was coded by Livia Masirova and it is
+      <a
+        href="https://github.com/liviamasir/Sportradar_assignment"
+        target="_blank"
+        >open-sourced</a
+      >
+    </p>
+  </footer>
 </html>
