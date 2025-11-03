@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add new event</title>
+    <link rel="icon" href="sports.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kalnia:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Syne:wght@400;500;800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Add new event</h1>
+    <form action="" class="form">
+      <label for="home-team">Enter a home team</label>
+      <input type="text" id="home-team" required />
+      <br />
+      <label for="away-team">Enter an away team</label>
+      <input type="text" id="away-team" required />
+      <br />
+      <label for="event-date">Select a date and time</label>
+      <input type="datetime-local" id="event-date" required />
+      <br />
+      <label for="sport">Sport</label>
+      <input type="text" id="sport" />
+      <br />
+      <input type="submit" value="Add Event" />
+    </form>
+  </body>
+  <script>
+    document.querySelector(".form").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const homeTeam = document.getElementById("home-team").value;
+      const awayTeam = document.getElementById("away-team").value;
+      const dateTime = document.getElementById("event-date").value;
+      const sport = document.getElementById("sport").value;
+
+      const dateVenue = dateTime.split("T")[0];
+
+      const savedEvents =
+        JSON.parse(localStorage.getItem("customEvents")) || [];
+
+      savedEvents.push({
+        homeTeam: { name: homeTeam },
+        awayTeam: { name: awayTeam },
+        dateVenue: dateVenue,
+        sport: sport,
+        originCompetitionName: "User added",
+      });
+
+      localStorage.setItem("customEvents", JSON.stringify(savedEvents));
+
+      window.location.href = "index.html";
+    });
+  </script>
+</html>
