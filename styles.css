@@ -195,3 +195,35 @@ nav ul li a:hover {
 footer a {
   color: #96d187;
 }
+
+@media (max-width: 600px) {
+  .logo {
+    max-height: 30px;
+    max-width: 90px;
+    margin-left: 10px;
+  }
+  nav li {
+    margin-right: 10px;
+  }
+
+  td,
+  th {
+    width: 40px;
+    height: 40px;
+  }
+  #event-day {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 400px) {
+  td,
+  th {
+    font-size: smaller;
+    width: 30px;
+    height: 30px;
+  }
+  #event-day {
+    max-width: 80%;
+  }
+}
