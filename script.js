@@ -197,8 +197,43 @@ function generateCalendar(year, month) {
     });
 
     cell.addEventListener("click", () => {
-      const event = events[0];
-      showEventDetails(event);
+      if (events.length === 1) {
+        showEventDetails(events[0]);
+      } else {
+        const modal = document.createElement("div");
+        modal.className = "event-modal";
+        modal.innerHTML = `
+      <div class="event-modal-content">
+        <h3>Select a match</h3>
+        <ul>
+          ${events
+            .map(
+              (ev, index) => `
+              <li>
+                <button class="match-btn" data-index="${index}">
+                  ${ev.homeTeam?.name || "?"} vs ${ev.awayTeam?.name || "?"}
+                </button>
+              </li>`
+            )
+            .join("")}
+        </ul>
+        <button id="close-modal">Cancel</button>
+      </div>
+    `;
+        document.body.appendChild(modal);
+
+        modal.querySelectorAll(".match-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const event = events[btn.dataset.index];
+            modal.remove();
+            showEventDetails(event);
+          });
+        });
+
+        modal.querySelector("#close-modal").addEventListener("click", () => {
+          modal.remove();
+        });
+      }
     });
   });
 }
