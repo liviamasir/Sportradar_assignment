@@ -1,0 +1,31 @@
+AI usage throughout the project:
+
+Task 1 - Calendar View
+- help with formulating a function to load a JSON file (fetch function)
+- help with the indexing the months and days in Calendar (function generateCalendar())
+- border-radius at the table / border-collapse: collapse;
+- fixing the issue with last cells of the table outside of the month - they were not grey like the first ones outside of the month
+- event market/dot - this line of code is from AI: const dayString = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+- adding tooltip - code implementation, more events at one day
+- this is from AI: tooltip.style.left = e.pageX + 12 + "px"; tooltip.style.top = e.pageY + 12 + "px";
+- optional chaining (e.g. ev.homeTeam?.name || "?")
+
+Task 2 - Event Detail Page
+- linking addEvent.html with script.js
+- fixing bug when the event was displaying twice on the calendar (const combinedEvents = [...events, ...customEvents];)
+- modal window for choosing event when there are more events a day
+
+Task 3 - Add Event Functionality
+- calendar link with add Event.html
+
+Task 4 - Responsiveness
+-
+
+Task 5 - Navigation
+- styling the nav bar, logo on the left, the rest on the right
+- styling the height of the logo
+- solving the problem with the gap between the top of the page and the navigation menu - margin
+
+Other
+- adding month selector
+- footer position adjustment
